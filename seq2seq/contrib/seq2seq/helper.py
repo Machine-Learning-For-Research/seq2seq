@@ -32,8 +32,8 @@ import abc
 
 import six
 
-from tensorflow.contrib.distributions.python.ops import bernoulli
-from tensorflow.contrib.distributions.python.ops import categorical
+from tensorflow.python.ops.distributions.bernoulli import Bernoulli
+from tensorflow.contrib.learn.python.learn.preprocessing import categorical
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
 from tensorflow.python.layers import base as layers_base
@@ -384,7 +384,7 @@ class ScheduledOutputTrainingHelper(TrainingHelper):
   def sample(self, time, outputs, state, name=None):
     with ops.name_scope(name, "ScheduledOutputTrainingHelperSample",
                         [time, outputs, state]):
-      sampler = bernoulli.Bernoulli(probs=self._sampling_probability)
+      sampler = Bernoulli(probs=self._sampling_probability)
       return math_ops.cast(
           sampler.sample(sample_shape=self.batch_size, seed=self._seed),
           dtypes.bool)
